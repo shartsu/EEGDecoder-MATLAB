@@ -4,7 +4,7 @@ allTarget=importdata(file_allTarget);
 allNonTarget=importdata(file_allNonTarget);
 electrodes = {'Cz','CPz','P3','P4','C3','C4','CP5','CP6'};
 
-%signal averaging over all channels
+%signal averaging over all electrodes
 %TimeAveraging(EEGFile, 1, 10, 0.5);
 
 Sampling_Hz = allTarget.data(1, 10);
@@ -15,15 +15,15 @@ SeparatedNonTargetNum = dot(size(allNonTarget.data(:,1))/Duration_points,[1 0]);
 %initiallize
 SeparatedTarget3d = zeros(Duration_points, 8, SeparatedTargetNum);
 SeparatedNonTarget3d  = zeros(Duration_points, 8, SeparatedNonTargetNum);
-EachChAveragedTarget2d = zeros(Duration_points, 8);
-EachChAveragedNonTarget2d = zeros(Duration_points, 8);
-MeanAllChTarget1d = zeros(Duration_points, 1);
-MeanAllChNonTarget1d = zeros(Duration_points, 1);
+EachElectrodeAveragedTarget2d = zeros(Duration_points, 8);
+EachElectrodeAveragedNonTarget2d = zeros(Duration_points, 8);
+MeanAllElectrodeTarget1d = zeros(Duration_points, 1);
+MeanAllElectrodeNonTarget1d = zeros(Duration_points, 1);
 
-SDEachChTarget2d = zeros(Duration_points, 8);
-SDEachChNonTarget2d  = zeros(Duration_points, 8);
-SEEachChTarget2d = zeros(Duration_points, 8);
-SEEachChNonTarget2d  = zeros(Duration_points, 8);
+SDEachElectrodeTarget2d = zeros(Duration_points, 8);
+SDEachElectrodeNonTarget2d  = zeros(Duration_points, 8);
+SEEachElectrodeTarget2d = zeros(Duration_points, 8);
+SEEachElectrodeNonTarget2d  = zeros(Duration_points, 8);
 SDAllTarget1d = zeros(Duration_points, 1);
 SDAllNonTarget1d = zeros(Duration_points, 1);
 SEAllTarget1d = zeros(Duration_points, 1);
@@ -60,24 +60,24 @@ whos SeparatedNonTarget3d
 
 for j = 1:8
     for i = 1:Duration_points
-        EachChAveragedTarget2d(i, j) = mean(SeparatedTarget3d(i, j, 1:SeparatedTargetNum));
-        EachChAveragedNonTarget2d(i, j) = mean(SeparatedNonTarget3d(i, j, 1:SeparatedNonTargetNum));
+        EachElectrodeAveragedTarget2d(i, j) = mean(SeparatedTarget3d(i, j, 1:SeparatedTargetNum));
+        EachElectrodeAveragedNonTarget2d(i, j) = mean(SeparatedNonTarget3d(i, j, 1:SeparatedNonTargetNum));
     end
 end
 
-whos EachChAveragedTarget2d
-whos EachChAveragedNonTarget2d
+whos EachElectrodeAveragedTarget2d
+whos EachElectrodeAveragedNonTarget2d
 
 %=== SD for 2D ===
 for j = 1:8
     for i = 1:Duration_points
-        SDEachChTarget2d(i, j) = std(SeparatedTarget3d(i, j, 1:SeparatedTargetNum), 1, 3);
-        SDEachChNonTarget2d(i, j) = std(SeparatedNonTarget3d(i, j, 1:SeparatedNonTargetNum), 1, 3);
+        SDEachElectrodeTarget2d(i, j) = std(SeparatedTarget3d(i, j, 1:SeparatedTargetNum), 1, 3);
+        SDEachElectrodeNonTarget2d(i, j) = std(SeparatedNonTarget3d(i, j, 1:SeparatedNonTargetNum), 1, 3);
     end
 end
 
-whos SDEachChTarget2d
-whos SDEachChNonTarget2d
+whos SDEachElectrodeTarget2d
+whos SDEachElectrodeNonTarget2d
 
 %=== SE for 2D ===
 %Calculate each Timepoint SE
@@ -87,25 +87,25 @@ NonTargetEachChN = sqrt(SeparatedNonTargetNum);
 
 for j = 1:8
     for i = 1:Duration_points
-        SEEachChTarget2d(i, j) = SDEachChTarget2d(i, j)/TargetEachChN;
-        SEEachChNonTarget2d(i, j) = SDEachChNonTarget2d(i, j)/NonTargetEachChN;
+        SEEachElectrodeTarget2d(i, j) = SDEachElectrodeTarget2d(i, j)/TargetEachChN;
+        SEEachElectrodeNonTarget2d(i, j) = SDEachElectrodeNonTarget2d(i, j)/NonTargetEachChN;
     end
 end
 
-whos SEEachChTarget2d
-whos SEEachChNonTarget2d
+whos SEEachElectrodeTarget2d
+whos SEEachElectrodeNonTarget2d
 
 
 %=== MeanAverage(1D) ===
 %Contains all channels averaged data (mean TimeAverage Comulmn1-8 -> Column1) 
 
 for i = 1:Duration_points
-    MeanAllChTarget1d(i, 1) = mean(EachChAveragedTarget2d(i, :));
-    MeanAllChNonTarget1d(i, 1) = mean(EachChAveragedNonTarget2d(i, :));
+    MeanAllElectrodeTarget1d(i, 1) = mean(EachElectrodeAveragedTarget2d(i, :));
+    MeanAllElectrodeNonTarget1d(i, 1) = mean(EachElectrodeAveragedNonTarget2d(i, :));
 end
 
-whos MeanAllChTarget1d
-whos MeanAllChNonTarget1d
+whos MeanAllElectrodeTarget1d
+whos MeanAllElectrodeNonTarget1d
 
 
 
@@ -184,15 +184,16 @@ whos aveNonTarget
 X = linspace(0, Stimulus_duration, Duration_points);
 whos X
 
+%{
 %Each channel graph
 figure
-plot(X, MeanAllChTarget1d(:,1), '-o', X, MeanAllChNonTarget1d(:,1), '-*', ...
-    X, EachChAveragedTarget2d(:,1), X, EachChAveragedTarget2d(:,2), X, EachChAveragedTarget2d(:,3),...
-    X, EachChAveragedTarget2d(:,4), X, EachChAveragedTarget2d(:,5), X, EachChAveragedTarget2d(:,6),...
-    X, EachChAveragedTarget2d(:,7), X, EachChAveragedTarget2d(:,8),...
-    X, EachChAveragedNonTarget2d(:,1), X, EachChAveragedNonTarget2d(:,2), X, EachChAveragedNonTarget2d(:,3),...
-    X, EachChAveragedNonTarget2d(:,4), X, EachChAveragedNonTarget2d(:,5), X, EachChAveragedNonTarget2d(:,6),...
-    X, EachChAveragedNonTarget2d(:,7), X, EachChAveragedNonTarget2d(:,8));
+plot(X, MeanAllElectrodeTarget1d(:,1), '-o', X, MeanAllElectrodeNonTarget1d(:,1), '-*', ...
+    X, EachElectrodeAveragedTarget2d(:,1), X, EachElectrodeAveragedTarget2d(:,2), X, EachElectrodeAveragedTarget2d(:,3),...
+    X, EachElectrodeAveragedTarget2d(:,4), X, EachElectrodeAveragedTarget2d(:,5), X, EachElectrodeAveragedTarget2d(:,6),...
+    X, EachElectrodeAveragedTarget2d(:,7), X, EachElectrodeAveragedTarget2d(:,8),...
+    X, EachElectrodeAveragedNonTarget2d(:,1), X, EachElectrodeAveragedNonTarget2d(:,2), X, EachElectrodeAveragedNonTarget2d(:,3),...
+    X, EachElectrodeAveragedNonTarget2d(:,4), X, EachElectrodeAveragedNonTarget2d(:,5), X, EachElectrodeAveragedNonTarget2d(:,6),...
+    X, EachElectrodeAveragedNonTarget2d(:,7), X, EachElectrodeAveragedNonTarget2d(:,8));
 ax = gca;
 hold all;
 axis tight;
@@ -203,13 +204,13 @@ set(ax,'YTick',-10:0.5:10);
 xlabel('time [s]', 'FontSize', 14)
 ylabel('[\muV]', 'FontSize', 14)
 set(ax,'XGrid','on','YGrid','on');
-
+%}
 
 %Mean and SEerrorbar graph
 figure
-shadedErrorBar(X, MeanAllChTarget1d(:,1), SEAllTarget1d(:,1), {'color', [0.3984 0 0.5977]} , 1);
+shadedErrorBar(X, MeanAllElectrodeTarget1d(:,1), SEAllTarget1d(:,1), {'color', [0.3984 0 0.5977]} , 1);
 hold on
-shadedErrorBar(X, MeanAllChNonTarget1d(:,1), SEAllNonTarget1d(:,1), {'color', [0 0.6289 0.8008]}, 1);
+shadedErrorBar(X, MeanAllElectrodeNonTarget1d(:,1), SEAllNonTarget1d(:,1), {'color', [0 0.6289 0.8008]}, 1);
 
 ax = gca;
 hold all;
@@ -223,11 +224,11 @@ ylabel('[\muV]', 'FontSize', 14)
 set(ax,'XGrid','on','YGrid','on');
 
 
-%Ch1 ... Cz and Cz SEerrorbar graph
+%Electrode1 ... Cz and Cz SEerrorbar graph
 figure
-shadedErrorBar(X, EachChAveragedTarget2d(:,1), SEEachChTarget2d(:,1), {'color', [0.3984 0 0.5977]} , 1);
+shadedErrorBar(X, EachElectrodeAveragedTarget2d(:,1), SEEachElectrodeTarget2d(:,1), {'color', [0.3984 0 0.5977]} , 1);
 hold on
-shadedErrorBar(X, EachChAveragedNonTarget2d(:,1), SEEachChNonTarget2d(:,1), {'color', [0 0.6289 0.8008]}, 1);
+shadedErrorBar(X, EachElectrodeAveragedNonTarget2d(:,1), SEEachElectrodeNonTarget2d(:,1), {'color', [0 0.6289 0.8008]}, 1);
 
 ax = gca;
 hold all;
@@ -236,15 +237,16 @@ grid on;
 axis([0 Stimulus_duration -12 12]);
 set(ax,'XTick',0: 0.1: Stimulus_duration);
 set(ax,'YTick',-10:0.5:10);
+title('Electrode Cz')
 xlabel('Cz time [s]', 'FontSize', 14)
 ylabel('[\muV]', 'FontSize', 14)
 set(ax,'XGrid','on','YGrid','on');
 
-%Ch8 ... CP6 and CP6 SEerrorbar graph
+%Electrode8 ... CP6 and CP6 SEerrorbar graph
 figure
-shadedErrorBar(X, EachChAveragedTarget2d(:,8), SEEachChTarget2d(:,8), {'color', [0.3984 0 0.5977]} , 1);
+shadedErrorBar(X, EachElectrodeAveragedTarget2d(:,8), SEEachElectrodeTarget2d(:,8), {'color', [0.3984 0 0.5977]} , 1);
 hold on
-shadedErrorBar(X, EachChAveragedNonTarget2d(:,8), SEEachChNonTarget2d(:,8), {'color', [0 0.6289 0.8008]}, 1);
+shadedErrorBar(X, EachElectrodeAveragedNonTarget2d(:,8), SEEachElectrodeNonTarget2d(:,8), {'color', [0 0.6289 0.8008]}, 1);
 
 ax = gca;
 hold all;
@@ -253,6 +255,7 @@ grid on;
 axis([0 Stimulus_duration -12 12]);
 set(ax,'XTick',0: 0.1: Stimulus_duration);
 set(ax,'YTick',-10:0.5:10);
+title(['Electrode ', electrodes(1, 8)])
 xlabel('CP6 time [s]', 'FontSize', 14)
 ylabel('[\muV]', 'FontSize', 14)
 set(ax,'XGrid','on','YGrid','on');
