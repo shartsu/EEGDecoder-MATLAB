@@ -206,58 +206,38 @@ ylabel('[\muV]', 'FontSize', 14)
 set(ax,'XGrid','on','YGrid','on');
 %}
 
-%Mean and SEerrorbar graph
+%Mean EEG and SEerrorbar graph
+
+%Each electrode EEGs and them SEerrorbar graphs
+% electrodes = {'Cz','CPz','P3','P4','C3','C4','CP5','CP6'};
+
 figure
-shadedErrorBar(X, MeanAllElectrodeTarget1d(:,1), SEAllTarget1d(:,1), {'color', [0.3984 0 0.5977]} , 1);
-hold on
-shadedErrorBar(X, MeanAllElectrodeNonTarget1d(:,1), SEAllNonTarget1d(:,1), {'color', [0 0.6289 0.8008]}, 1);
+whitebg('white')
+subplot(3,3,8);
+drawSignalGraph(X, MeanAllElectrodeTarget1d, SEAllTarget1d, MeanAllElectrodeNonTarget1d, SEAllNonTarget1d, 1, 'AllElectrodes', Stimulus_duration);
 
-ax = gca;
-hold all;
-axis tight;
-grid on;
-axis([0 Stimulus_duration -10 10]);
-set(ax,'XTick',0: 0.1: Stimulus_duration);
-set(ax,'YTick',-10:0.5:10);
-xlabel('time [s]', 'FontSize', 14)
-ylabel('[\muV]', 'FontSize', 14)
-set(ax,'XGrid','on','YGrid','on');
+subplot(3,3,2);
+drawSignalGraph(X, EachElectrodeAveragedTarget2d, SEEachElectrodeTarget2d, EachElectrodeAveragedNonTarget2d, SEEachElectrodeNonTarget2d, 1, electrodes(1,1), Stimulus_duration);
 
+subplot(3,3,5);
+drawSignalGraph(X, EachElectrodeAveragedTarget2d, SEEachElectrodeTarget2d, EachElectrodeAveragedNonTarget2d, SEEachElectrodeNonTarget2d, 2, electrodes(1,2), Stimulus_duration);
 
-%Electrode1 ... Cz and Cz SEerrorbar graph
-figure
-shadedErrorBar(X, EachElectrodeAveragedTarget2d(:,1), SEEachElectrodeTarget2d(:,1), {'color', [0.3984 0 0.5977]} , 1);
-hold on
-shadedErrorBar(X, EachElectrodeAveragedNonTarget2d(:,1), SEEachElectrodeNonTarget2d(:,1), {'color', [0 0.6289 0.8008]}, 1);
+subplot(3,3,7);
+drawSignalGraph(X, EachElectrodeAveragedTarget2d, SEEachElectrodeTarget2d, EachElectrodeAveragedNonTarget2d, SEEachElectrodeNonTarget2d, 3, electrodes(1,3), Stimulus_duration);
 
-ax = gca;
-hold all;
-axis tight;
-grid on;
-axis([0 Stimulus_duration -12 12]);
-set(ax,'XTick',0: 0.1: Stimulus_duration);
-set(ax,'YTick',-10:0.5:10);
-title('Electrode Cz')
-xlabel('Cz time [s]', 'FontSize', 14)
-ylabel('[\muV]', 'FontSize', 14)
-set(ax,'XGrid','on','YGrid','on');
+subplot(3,3,9);
+drawSignalGraph(X, EachElectrodeAveragedTarget2d, SEEachElectrodeTarget2d, EachElectrodeAveragedNonTarget2d, SEEachElectrodeNonTarget2d, 4, electrodes(1,4), Stimulus_duration);
 
-%Electrode8 ... CP6 and CP6 SEerrorbar graph
-figure
-shadedErrorBar(X, EachElectrodeAveragedTarget2d(:,8), SEEachElectrodeTarget2d(:,8), {'color', [0.3984 0 0.5977]} , 1);
-hold on
-shadedErrorBar(X, EachElectrodeAveragedNonTarget2d(:,8), SEEachElectrodeNonTarget2d(:,8), {'color', [0 0.6289 0.8008]}, 1);
+subplot(3,3,1);
+drawSignalGraph(X, EachElectrodeAveragedTarget2d, SEEachElectrodeTarget2d, EachElectrodeAveragedNonTarget2d, SEEachElectrodeNonTarget2d, 5, electrodes(1,5), Stimulus_duration);
 
-ax = gca;
-hold all;
-axis tight;
-grid on;
-axis([0 Stimulus_duration -12 12]);
-set(ax,'XTick',0: 0.1: Stimulus_duration);
-set(ax,'YTick',-10:0.5:10);
-title(['Electrode ', electrodes(1, 8)])
-xlabel('CP6 time [s]', 'FontSize', 14)
-ylabel('[\muV]', 'FontSize', 14)
-set(ax,'XGrid','on','YGrid','on');
+subplot(3,3,3);
+drawSignalGraph(X, EachElectrodeAveragedTarget2d, SEEachElectrodeTarget2d, EachElectrodeAveragedNonTarget2d, SEEachElectrodeNonTarget2d, 6, electrodes(1,6), Stimulus_duration);
 
+subplot(3,3,4);
+drawSignalGraph(X, EachElectrodeAveragedTarget2d, SEEachElectrodeTarget2d, EachElectrodeAveragedNonTarget2d, SEEachElectrodeNonTarget2d, 7, electrodes(1,7), Stimulus_duration);
+
+subplot(3,3,6);
+drawSignalGraph(X, EachElectrodeAveragedTarget2d, SEEachElectrodeTarget2d, EachElectrodeAveragedNonTarget2d, SEEachElectrodeNonTarget2d, 8, electrodes(1,8), Stimulus_duration);
+%}
 end
