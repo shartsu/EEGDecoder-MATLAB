@@ -1,17 +1,18 @@
-function drawSignalGraph(X, file_TargetSignal, file_TargetSE, file_NonTargetSignal, file_NonTargetSE, channelNo, GraphTitle, Stimulus_duration)
+function drawSignalGraph(file_TargetSignal, file_TargetSE, file_NonTargetSignal, file_NonTargetSE, channelNo, GraphTitle, Stimulus_duration, Duration_points)
 
-shadedErrorBar(X, file_TargetSignal(:,channelNo), file_TargetSE(:,channelNo), {'color', [0.3984 0 0.5977]} , 1);
+X = linspace(0, Stimulus_duration, Duration_points);
+TargetColor = [0.3984 0 0.5977];
+NonTargetColor = [0 0.6289 0.8008];
+
+shadedErrorBar(X, file_TargetSignal(:,channelNo), file_TargetSE(:,channelNo), {'color', TargetColor} , 1);
 hold on
-shadedErrorBar(X, file_NonTargetSignal(:,channelNo), file_NonTargetSE(:,channelNo), {'color', [0 0.6289 0.8008]}, 1);
-
-Ymax = 5;
-Ymin = -10;
+shadedErrorBar(X, file_NonTargetSignal(:,channelNo), file_NonTargetSE(:,channelNo), {'color', NonTargetColor}, 1);
 
 maxvec = max(file_TargetSignal(:,channelNo), file_NonTargetSignal(:,channelNo));
 minvec = min(file_TargetSignal(:,channelNo), file_NonTargetSignal(:,channelNo));
 
-if(Ymax < max(maxvec)) Ymax = max(maxvec) + 2.0; end
-if(Ymin > min(minvec)) Ymin = min(minvec) - 2.0; end
+Ymax = ceil(max(maxvec)) + 3.0;
+Ymin = floor(min(minvec)) - 3.0;
 
 ax = gca;
 hold all;
