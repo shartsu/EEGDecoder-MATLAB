@@ -1,21 +1,11 @@
 function [EachElectrodeAveragedTarget2d, SEEachElectrodeTarget2d, EachElectrodeAveragedNonTarget2d, SEEachElectrodeNonTarget2d,...
-    MeanAllElectrodeTarget1d, SEAllTarget1d, MeanAllElectrodeNonTarget1d, SEAllNonTarget1d]=getERPfromCSV(identifier, Duration_points)
+    MeanAllElectrodeTarget1d, SEAllTarget1d, MeanAllElectrodeNonTarget1d, SEAllNonTarget1d]=getERPfromCSV(AllTargetData, AllNonTargetData, Duration_points)
 
-TargetFileName = strcat(identifier, '-target-signal.csv');
-NonTargetFileName = strcat(identifier, '-nontarget-signal.csv');
-
-allTarget=importdata(TargetFileName);
-allNonTarget=importdata(NonTargetFileName);
+%How many Targets? and Non-Targets?
+SeparatedTargetNum = dot(size(AllTargetData(:,1))/Duration_points,[1 0]);
+SeparatedNonTargetNum = dot(size(AllNonTargetData(:,1))/Duration_points,[1 0]);
 
 %Just put as a log
-TargetFileName
-NonTargetFileName 
-
-%Sampling_Hz = allTarget.data(1, 10);
-%Duration_points = floor(Sampling_Hz * Stimulus_duration);
-SeparatedTargetNum = dot(size(allTarget.data(:,1))/Duration_points,[1 0]);
-SeparatedNonTargetNum = dot(size(allNonTarget.data(:,1))/Duration_points,[1 0]);
-
 SeparatedTargetNum
 SeparatedNonTargetNum
 
@@ -41,7 +31,7 @@ SEAllNonTarget1d = zeros(Duration_points, 1);
 for k = 1:SeparatedTargetNum
     for j = 2:9
         for i = 1:Duration_points
-           SeparatedTarget3d(i, j-1, k) = allTarget.data(i+(k-1)*Duration_points, j);   
+           SeparatedTarget3d(i, j-1, k) = AllTargetData(i+(k-1)*Duration_points, j);   
         end
     end
 end
@@ -50,7 +40,7 @@ end
 for k = 1:SeparatedNonTargetNum
     for j = 2:9
         for i = 1:Duration_points
-            SeparatedNonTarget3d(i, j-1, k) = allNonTarget.data(i+(k-1)*Duration_points, j);   
+            SeparatedNonTarget3d(i, j-1, k) = AllNonTargetData(i+(k-1)*Duration_points, j);   
         end
     end
 end
