@@ -1,12 +1,13 @@
-function [AllData, Sampling_Hz, Electrodes] = fileProcessor(File_CSV)
+function [AllData, Sampling_Hz, Electrodes] = fileProcessor(Input_File)
 
 AllData = [];
 
-if isempty(File_CSV)
+if isempty(Input_File)
     [FileName, FileNamePath]=uigetfile('*.csv','Select P300 file(s)','multiselect','on');
     FileNameCellArray = strcat(FileNamePath, FileName);
     
-    whos FileNameCellArray 
+    FileNameCellArray
+    whos FileNameCellArray
     
     if (ischar(FileNameCellArray))
         allData_struct = importdata(FileNameCellArray);
@@ -16,9 +17,10 @@ if isempty(File_CSV)
             allData_struct = importdata(FileNameCellArray{n});
             AllData = vertcat(AllData, allData_struct.data);
         end
-    end
+    end    
 else
-    allData_struct = importdata(File_CSV);
+    %For char
+    allData_struct = importdata(Input_File);
     AllData = allData_struct.data;
 end
 
