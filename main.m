@@ -18,22 +18,28 @@ whos AllTargetData;
 whos AllNonTargetData;
 %Electrodes
 
-[AllTargetData_Filtered_P300, AllNonTargetData_Filtered_P300] = TakeLPF4AllCh(AllTargetData, AllNonTargetData, Electrodes);
-
 Duration_points = floor(Sampling_Hz * Stimulus_duration);
+
+%Take BP Filter (5Hz-27Hz) and Downsampling (256Hz -> 64Hz)
+[AllTargetData_Filtered_P300_DownSampled_64Hz, AllNonTargetData_Filtered_P300_DownSampled_64Hz, Duration_points_64Hz] = ...
+    TakeLPF4AllCh(AllTargetData, AllNonTargetData, Electrodes, Duration_points);
+
+whos AllTargetData_Filtered_P300_DownSampled_64Hz;
+whos AllNonTargetData_Filtered_P300_DownSampled_64Hz;
+Duration_points_64Hz
 
 % === Data exploit from files % === 
 [EachElectrodeAveragedTarget2d, SEEachElectrodeTarget2d, EachElectrodeAveragedNonTarget2d, SEEachElectrodeNonTarget2d, ...
     MeanAllElectrodeTarget1d, SEAllTarget1d, MeanAllElectrodeNonTarget1d, SEAllNonTarget1d] = ...
-    getERPfromCSV(AllTargetData_Filtered_P300, AllNonTargetData_Filtered_P300, Duration_points);
+    getERPfromCSV(AllTargetData_Filtered_P300_DownSampled_64Hz, AllNonTargetData_Filtered_P300_DownSampled_64Hz, Duration_points_64Hz);
 
 % === MeanAveragedGraph % === 
 OV2ERPGraph(MeanAllElectrodeTarget1d, SEAllTarget1d, ...
-    MeanAllElectrodeNonTarget1d, SEAllNonTarget1d, Stimulus_duration, Duration_points)
+    MeanAllElectrodeNonTarget1d, SEAllNonTarget1d, Stimulus_duration, Duration_points_64Hz)
 
 % === EachElectrodeGraph % === 
-if(length(Electrodes) == 8); OV2ERPGraph_Electrode_8(EachElectrodeAveragedTarget2d, SEEachElectrodeTarget2d, EachElectrodeAveragedNonTarget2d, SEEachElectrodeNonTarget2d, Stimulus_duration, Duration_points, Electrodes); end
-if(length(Electrodes) == 12); OV2ERPGraph_Electrode_12(EachElectrodeAveragedTarget2d, SEEachElectrodeTarget2d, EachElectrodeAveragedNonTarget2d, SEEachElectrodeNonTarget2d, Stimulus_duration, Duration_points, Electrodes); end
-if(length(Electrodes) == 16); OV2ERPGraph_Electrode_16(EachElectrodeAveragedTarget2d, SEEachElectrodeTarget2d, EachElectrodeAveragedNonTarget2d, SEEachElectrodeNonTarget2d, Stimulus_duration, Duration_points, Electrodes); end
+if(length(Electrodes) == 8); OV2ERPGraph_Electrode_8(EachElectrodeAveragedTarget2d, SEEachElectrodeTarget2d, EachElectrodeAveragedNonTarget2d, SEEachElectrodeNonTarget2d, Stimulus_duration, Duration_points_64Hz, Electrodes); end
+if(length(Electrodes) == 12); OV2ERPGraph_Electrode_12(EachElectrodeAveragedTarget2d, SEEachElectrodeTarget2d, EachElectrodeAveragedNonTarget2d, SEEachElectrodeNonTarget2d, Stimulus_duration, Duration_points_64Hz, Electrodes); end
+if(length(Electrodes) == 16); OV2ERPGraph_Electrode_16(EachElectrodeAveragedTarget2d, SEEachElectrodeTarget2d, EachElectrodeAveragedNonTarget2d, SEEachElectrodeNonTarget2d, Stimulus_duration, Duration_points_64Hz, Electrodes); end
 
 end

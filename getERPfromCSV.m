@@ -1,15 +1,18 @@
 function [EachElectrodeAveragedTarget2d, SEEachElectrodeTarget2d, EachElectrodeAveragedNonTarget2d, SEEachElectrodeNonTarget2d,...
-    MeanAllElectrodeTarget1d, SEAllTarget1d, MeanAllElectrodeNonTarget1d, SEAllNonTarget1d]=getERPfromCSV(AllTargetData, AllNonTargetData, Duration_points)
+    MeanAllElectrodeTarget1d, SEAllTarget1d, MeanAllElectrodeNonTarget1d, SEAllNonTarget1d] = ...
+    getERPfromCSV(AllTargetData, AllNonTargetData, Duration_points)
 
 %How many Targets? and Non-Targets?
 SeparatedTargetNum = dot(size(AllTargetData(:,1))/Duration_points,[1 0]);
 SeparatedNonTargetNum = dot(size(AllNonTargetData(:,1))/Duration_points,[1 0]);
 
-ChNum = dot(size(AllTargetData(1,:)) - 2, [0 1]);
+ChNum = dot(size(AllTargetData(1,:)), [0 1]);
 
 %Just put as a log
+ChNum
 SeparatedTargetNum
 SeparatedNonTargetNum
+%Duration_points
 
 %initiallize
 SeparatedTarget3d = zeros(Duration_points, ChNum, SeparatedTargetNum);
@@ -31,18 +34,18 @@ SEAllNonTarget1d = zeros(Duration_points, 1);
 %Input data to 3 dimension array
 %%Target
 for k = 1:SeparatedTargetNum
-    for j = 2:(ChNum+1)
+    for j = 1:ChNum
         for i = 1:Duration_points
-           SeparatedTarget3d(i, j-1, k) = AllTargetData(i+(k-1)*Duration_points, j);   
+           SeparatedTarget3d(i, j, k) = AllTargetData(i+(k-1)*Duration_points, j);   
         end
     end
 end
 
 %%NonTarget
 for k = 1:SeparatedNonTargetNum
-    for j = 2:(ChNum+1)
+    for j = 1:ChNum
         for i = 1:Duration_points
-            SeparatedNonTarget3d(i, j-1, k) = AllNonTargetData(i+(k-1)*Duration_points, j);   
+            SeparatedNonTarget3d(i, j, k) = AllNonTargetData(i+(k-1)*Duration_points, j);   
         end
     end
 end
