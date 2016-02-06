@@ -16,7 +16,7 @@ hold on
 shadedErrorBar(X, file_NonTargetSignal(:,channelNo), file_NonTargetSE(:,channelNo), {'color', NonTargetColor}, 1);
 hold on
 
-legend('Target Response', 'NonTarget Response');
+legend('TARGET', 'NonTARGET');
 
 maxvec = max(file_TargetSignal(:,channelNo), file_NonTargetSignal(:,channelNo));
 minvec = min(file_TargetSignal(:,channelNo), file_NonTargetSignal(:,channelNo));
@@ -24,8 +24,8 @@ minvec = min(file_TargetSignal(:,channelNo), file_NonTargetSignal(:,channelNo));
 Ymax = ceil(max(maxvec)) + 3.0;
 Ymin = floor(min(minvec)) - 3.0;
 
-axis([0.1 0.5 Ymin Ymax]);
-set(ax,'XTick', 0.1: 0.05: 0.5);
+axis([0.1 0.8 Ymin Ymax]);
+set(ax,'XTick', 0.1: 0.05: 0.8);
 set(ax,'YTick',Ymin:1:Ymax);
 set(ax,'GridColor',[0 0 1]);
 title(GraphTitle)

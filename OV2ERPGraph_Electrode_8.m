@@ -1,7 +1,7 @@
 function OV2ERPGraph_Electrode_8(EachElectrodeAveragedTarget2d, SEEachElectrodeTarget2d, EachElectrodeAveragedNonTarget2d, SEEachElectrodeNonTarget2d, Stimulus_duration, Duration_points, Electrodes)
 
 %=== Each Electrodes ===
-figure
+%figure
 subplot(2,4,1);
 drawSignalGraph(EachElectrodeAveragedTarget2d, SEEachElectrodeTarget2d, EachElectrodeAveragedNonTarget2d, SEEachElectrodeNonTarget2d, 1, Electrodes(1,1), Stimulus_duration, Duration_points);
 

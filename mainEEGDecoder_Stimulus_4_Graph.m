@@ -37,24 +37,23 @@ File4_NonTargetCSV  = dir(['./', directory, '/*-no5-nontarget-signal.csv']);
 %}
 
 % === New Version
-File1_TargetCSV     = dir(['./', directory, '/*-P300-SBE-Target1.csv']);
-File1_NonTargetCSV  = dir(['./', directory, '/*-P300-SBE-NonTarget1.csv']);
-File2_TargetCSV     = dir(['./', directory, '/*-P300-SBE-Target2.csv']);
-File2_NonTargetCSV  = dir(['./', directory, '/*-P300-SBE-NonTarget2.csv']);
-File3_TargetCSV     = dir(['./', directory, '/*-P300-SBE-Target3.csv']);
-File3_NonTargetCSV  = dir(['./', directory, '/*-P300-SBE-NonTarget3.csv']);
-File4_TargetCSV     = dir(['./', directory, '/*-P300-SBE-Target4.csv']);
-File4_NonTargetCSV  = dir(['./', directory, '/*-P300-SBE-NonTarget4.csv']);
+File1_TargetCSV     = dir(['./', directory, '/[6] P300-SBE-Target1*.csv']);
+File1_NonTargetCSV  = dir(['./', directory, '/[6] P300-SBE-NonTarget1*.csv']);
+File2_TargetCSV     = dir(['./', directory, '/[6] P300-SBE-Target2*.csv']);
+File2_NonTargetCSV  = dir(['./', directory, '/[6] P300-SBE-NonTarget2*.csv']);
+File3_TargetCSV     = dir(['./', directory, '/[6] P300-SBE-Target3*.csv']);
+File3_NonTargetCSV  = dir(['./', directory, '/[6] P300-SBE-NonTarget3*.csv']);
+File4_TargetCSV     = dir(['./', directory, '/[6] P300-SBE-Target4*.csv']);
+File4_NonTargetCSV  = dir(['./', directory, '/[6] P300-SBE-NonTarget4*.csv']);
 
-
-[AllTargetData_no1, Sampling_Hz, Electrodes] = fileProcessor_Stimulus(directory, File1_TargetCSV);
-[AllNonTargetData_no1]           = fileProcessor_Stimulus(directory, File1_NonTargetCSV);
-[AllTargetData_no2]              = fileProcessor_Stimulus(directory, File2_TargetCSV);
-[AllNonTargetData_no2]           = fileProcessor_Stimulus(directory, File2_NonTargetCSV);
-[AllTargetData_no3]              = fileProcessor_Stimulus(directory, File3_TargetCSV);
-[AllNonTargetData_no3]           = fileProcessor_Stimulus(directory, File3_NonTargetCSV);
-[AllTargetData_no4]              = fileProcessor_Stimulus(directory, File4_TargetCSV);
-[AllNonTargetData_no4]           = fileProcessor_Stimulus(directory, File4_NonTargetCSV);
+[AllTargetData_no1, Sampling_Hz, Electrodes] = fileProcessor_dir(directory, File1_TargetCSV);
+[AllNonTargetData_no1]           = fileProcessor_dir(directory, File1_NonTargetCSV);
+[AllTargetData_no2]              = fileProcessor_dir(directory, File2_TargetCSV);
+[AllNonTargetData_no2]           = fileProcessor_dir(directory, File2_NonTargetCSV);
+[AllTargetData_no3]              = fileProcessor_dir(directory, File3_TargetCSV);
+[AllNonTargetData_no3]           = fileProcessor_dir(directory, File3_NonTargetCSV);
+[AllTargetData_no4]              = fileProcessor_dir(directory, File4_TargetCSV);
+[AllNonTargetData_no4]           = fileProcessor_dir(directory, File4_NonTargetCSV);
 
 %Check how many data acquired
 whos AllTargetData_no1;
@@ -98,10 +97,14 @@ drawSignalGraph(MeanAllElectrodeTarget1d_8ch_Cmd3, SEAllTarget1d_8ch_Cmd3, MeanA
 subplot(2,2,4);
 drawSignalGraph(MeanAllElectrodeTarget1d_8ch_Cmd4, SEAllTarget1d_8ch_Cmd4, MeanAllElectrodeNonTarget1d_8ch_Cmd4, SEAllNonTarget1d_8ch_Cmd4, 1, 'Stimulus4 - RightLeg', Stimulus_duration, Duration_points_64Hz);
 
+filename_4Stimulus = strcat(directory, '/_P3Response-4Stimulus.png');
+set(gcf,'Position', [0 0 1920 1080], 'PaperPositionMode', 'auto');
+print(filename_4Stimulus,'-dpng','-r0')
+
 
 end
 
-function [AllData, Sampling_Hz, Electrodes] = fileProcessor_Stimulus(directory, File_dir_struct)
+function [AllData, Sampling_Hz, Electrodes] = fileProcessor_dir(directory, File_dir_struct)
    
     AllData = [];
     File_dir_struct.name
