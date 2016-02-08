@@ -57,12 +57,13 @@ OV2ERPGraph(MeanAllElectrodeTarget1d_8ch, SEAllTarget1d_8ch, ...
     MeanAllElectrodeNonTarget1d_8ch, SEAllNonTarget1d_8ch, 'AllElectrodesMeanAverage(1-8Ch)', Stimulus_duration, Duration_points_256Hz);
 %}
 % -- Downsampled(8Ch)
+figure
 OV2ERPGraph(MeanAllElectrodeTarget1d_DS64Hz_8ch, SEAllTarget1d_DS64Hz_8ch, ...
     MeanAllElectrodeNonTarget1d_DS64Hz_8ch, SEAllNonTarget1d_DS64Hz_8ch, 'AllElectrodesMeanAverage(1-8Ch, Downsampled)',Stimulus_duration, Duration_points_64Hz);
 
 % === EachElectrodeGraph % === 
-
-OV2ERPGraph_Electrode_12(EachElectrodeAveragedTarget2d_DS64Hz, SEEachElectrodeTarget2d_DS64Hz, EachElectrodeAveragedNonTarget2d_DS64Hz, SEEachElectrodeNonTarget2d_DS64Hz, Stimulus_duration, Duration_points_64Hz, Electrodes); 
+figure
+OV2ERPGraph_Electrode_8(EachElectrodeAveragedTarget2d_DS64Hz_8ch, SEEachElectrodeTarget2d_DS64Hz_8ch, EachElectrodeAveragedNonTarget2d_DS64Hz_8ch, SEEachElectrodeNonTarget2d_DS64Hz_8ch, Stimulus_duration, Duration_points_64Hz, Electrodes, gap); 
 %{
 if(length(Electrodes) == 8)
     OV2ERPGraph_Electrode_8(EachElectrodeAveragedTarget2d, SEEachElectrodeTarget2d, EachElectrodeAveragedNonTarget2d, SEEachElectrodeNonTarget2d, Stimulus_duration, Duration_points_256Hz, Electrodes); 
