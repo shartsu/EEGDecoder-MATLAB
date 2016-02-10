@@ -1,4 +1,4 @@
-function TrialDecoder_6(directory, Stimulus_duration)
+function TrialDecoderP300_6(directory, Stimulus_duration)
 
 % === Take the datas from CSV files
 
@@ -10,14 +10,14 @@ FileA_NonTargetCSV    = dir(['./', directory, '/[6] P300-SBE_NonTargetA*.csv']);
 FileB_TargetCSV       = dir(['./', directory, '/[6] P300-SBE_TargetB*.csv']);
 FileB_NonTargetCSV    = dir(['./', directory, '/[6] P300-SBE_NonTargetB*.csv']);
 
-File1_TargetCSV     = dir(['./', directory, '/[6] P300-trialSignal_BlockTarget1*.csv']);
-File1_NonTargetCSV  = dir(['./', directory, '/[6] P300-trialSignal_BlockNonTarget1*.csv']);
-File2_TargetCSV     = dir(['./', directory, '/[6] P300-trialSignal_BlockTarget2*.csv']);
-File2_NonTargetCSV  = dir(['./', directory, '/[6] P300-trialSignal_BlockNonTarget2*.csv']);
-File3_TargetCSV     = dir(['./', directory, '/[6] P300-trialSignal_BlockTarget3*.csv']);
-File3_NonTargetCSV  = dir(['./', directory, '/[6] P300-trialSignal_BlockNonTarget3*.csv']);
-File4_TargetCSV     = dir(['./', directory, '/[6] P300-trialSignal_BlockTarget4*.csv']);
-File4_NonTargetCSV  = dir(['./', directory, '/[6] P300-trialSignal_BlockNonTarget4*.csv']);
+File1_TargetCSV     = dir(['./', directory, '/[6] P300-SBE_Target1*.csv']);
+File1_NonTargetCSV  = dir(['./', directory, '/[6] P300-SBE_NonTarget1*.csv']);
+File2_TargetCSV     = dir(['./', directory, '/[6] P300-SBE_Target2*.csv']);
+File2_NonTargetCSV  = dir(['./', directory, '/[6] P300-SBE_NonTarget2*.csv']);
+File3_TargetCSV     = dir(['./', directory, '/[6] P300-SBE_Target3*.csv']);
+File3_NonTargetCSV  = dir(['./', directory, '/[6] P300-SBE_NonTarget3*.csv']);
+File4_TargetCSV     = dir(['./', directory, '/[6] P300-SBE_Target4*.csv']);
+File4_NonTargetCSV  = dir(['./', directory, '/[6] P300-SBE_NonTarget4*.csv']);
 
 % === Put them into Arrays
 [AllTargetData, Sampling_Hz_256] = fileProcessor_dir(directory, File_TargetCSV);
@@ -56,20 +56,26 @@ File4_NonTargetCSV  = dir(['./', directory, '/[6] P300-trialSignal_BlockNonTarge
 [AllTargetData_Filtered_P300_DS64Hz_no4, AllNonTargetData_Filtered_P300_DS64Hz_no4] = DownSampling(AllTargetData_Filtered_P300_no4, AllNonTargetData_Filtered_P300_no4, Electrodes, floor(Sampling_Hz_256 * Stimulus_duration));
 
 % === Data exploit from files % === 
-% 256Hz -> 64Hz (Downsampled in this patch, Downsampling Method)
+% 1 "All TARGET vs NonTARGET Stimulus(1cls)"
+% BP Filter ... MATLAB
+% Downsampling ... MATLAB(64Hz)
 [EachElectrodeAveragedTarget2d_DS64Hz_8ch, SEEachElectrodeTarget2d_DS64Hz_8ch, EachElectrodeAveragedNonTarget2d_DS64Hz_8ch, SEEachElectrodeNonTarget2d_DS64Hz_8ch, ...
     MeanAllElectrodeTarget1d_DS64Hz_8ch, SEAllTarget1d_DS64Hz_8ch, MeanAllElectrodeNonTarget1d_DS64Hz_8ch, SEAllNonTarget1d_DS64Hz_8ch] = ...
     getERPfromCSV(AllTargetData_Filtered_P300_DS64Hz(:, 1:8), AllNonTargetData_Filtered_P300_DS64Hz(:, 1:8), Duration_points_256Hz_Downsampled);
 
-% 256Hz (No dowmsampling because this result will taken the shape of the ERP response)
+% 2 "All clsA TARGET vs clsB TARGET Stimulus(2cls)"
+% BP Filter ... OpenViBE
+% Downsampling ... NOT (256Hz, because this result will taken the shape of the ERP response)
 [EachElectrodeAveragedTarget2d_DS64Hz_2clsA, SEEachElectrodeTarget2d_DS64Hz_2clsA, EachElectrodeAveragedNonTarget2d_DS64Hz_2clsA, SEEachElectrodeNonTarget2d_DS64Hz_2clsA, ...
     MeanAllElectrodeTarget1d_DS64Hz_2clsA, SEAllTarget1d_DS64Hz_2clsA, MeanAllElectrodeNonTarget1d_DS64Hz_2clsA, SEAllNonTarget1d_DS64Hz_2clsA] = ...
-    getERPfromCSV(AllTargetData_clsA(:, 2:9), AllNonTargetData_clsA(:, 2:9), floor(Sampling_Hz_256 * Stimulus_duration));
+    getERPfromCSV(AllTargetData_clsA(:, 2:9), AllNonTargetData_clsA(:, 2:9), floor(Sampling_Hz_256 * Stimulus_1duration));
 [EachElectrodeAveragedTarget2d_DS64Hz_2clsB, SEEachElectrodeTarget2d_DS64Hz_2clsB, EachElectrodeAveragedNonTarget2d_DS64Hz_2clsB, SEEachElectrodeNonTarget2d_DS64Hz_2clsB, ...
     MeanAllElectrodeTarget1d_DS64Hz_2clsB, SEAllTarget1d_DS64Hz_2clsB, MeanAllElectrodeNonTarget1d_DS64Hz_2clsB, SEAllNonTarget1d_DS64Hz_2clsB] = ...
-    getERPfromCSV(AllTargetData_clsB(:, 2:9), AllNonTargetData_clsB(:, 2:9), floor(Sampling_Hz_256 * Stimulus_duration));
+    getERPfromCSV(AllTargetData_clsB(:, 2:9), AllNonTargetData_clsB(:, 2:9), floor(Sampling_Hz_256 * Stimulus_1duration));
 
-% 64Hz (Downsampled in OpenVibe, because slide epoc is complicated to replicate in MATLAB)
+% 3 "TARGET vs NonTARGET Stimuli at each posiions(4cls)"
+% BP Filter ... OpenViBE
+% Downsampling ... OpenViBE (64Hz, because slide epoc is complicated to replicate in MATLAB)
 [EachElectrodeAveragedTarget2d_DS64Hz_4cls1, SEEachElectrodeTarget2d_DS64Hz_4cls1, EachElectrodeAveragedNonTarget2d_DS64Hz_4cls1, SEEachElectrodeNonTarget2d_DS64Hz_4cls1,...
     MeanAllElectrodeTarget1d_DS64Hz_4cls1, SEAllTarget1d_DS64Hz_4cls1, MeanAllElectrodeNonTarget1d_DS64Hz_4cls1, SEAllNonTarget1d_DS64Hz_4cls1] = ...
     getERPfromCSV(AllTargetData_Filtered_P300_DS64Hz_no1(:, 1:8), AllNonTargetData_Filtered_P300_DS64Hz_no1(:, 1:8),  Duration_points_256Hz_Downsampled);

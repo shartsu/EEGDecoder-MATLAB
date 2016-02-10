@@ -36,8 +36,8 @@ else
 end
 hold on
 
-axis([0.0 0.9 Ymin Ymax]);
-set(ax,'XTick', 0.0: 0.05: 0.9);
+axis([0.0 0.7 Ymin Ymax]);
+set(ax,'XTick', 0.0: 0.05: 0.7);
 set(ax,'YTick',Ymin:1:Ymax);
 set(ax,'GridColor',[0 0 1]);
 title(GraphTitle)
