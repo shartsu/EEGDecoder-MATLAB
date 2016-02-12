@@ -5,14 +5,12 @@ function [EachElectrodeAveragedTarget2d, SEEachElectrodeTarget2d, EachElectrodeA
 %How many Targets? and Non-Targets?
 SeparatedTargetNum = dot(size(AllTargetData(:,1))/Duration_points,[1 0]);
 SeparatedNonTargetNum = dot(size(AllNonTargetData(:,1))/Duration_points,[1 0]);
-
 ChNum = dot(size(AllTargetData(1,:)), [0 1]);
 
 %Just put as a log
 ChNum
 SeparatedTargetNum
 SeparatedNonTargetNum
-%Duration_points
 
 %initiallize
 SeparatedTarget3d = zeros(Duration_points, ChNum, SeparatedTargetNum);
@@ -36,7 +34,12 @@ SEAllNonTarget1d = zeros(Duration_points, 1);
 for k = 1:SeparatedTargetNum
     for j = 1:ChNum
         for i = 1:Duration_points
-           SeparatedTarget3d(i, j, k) = AllTargetData(i+(k-1)*Duration_points, j);   
+           tmp_Target = AllTargetData(i+(k-1)*Duration_points, j);
+           if(tmp_Target >= 80 || tmp_Target <= -80) 
+               SeparatedTarget3d(i, j, k) = NaN;
+           else
+               SeparatedTarget3d(i, j, k) = AllTargetData(i+(k-1)*Duration_points, j);
+           end
         end
     end
 end
@@ -45,7 +48,12 @@ end
 for k = 1:SeparatedNonTargetNum
     for j = 1:ChNum
         for i = 1:Duration_points
-            SeparatedNonTarget3d(i, j, k) = AllNonTargetData(i+(k-1)*Duration_points, j);   
+           tmp_Nontarget = AllNonTargetData(i+(k-1)*Duration_points, j);
+           if(tmp_Nontarget  >= 80 || tmp_Nontarget <= -80) 
+               SeparatedNonTarget3d(i, j, k) = NaN;
+           else
+               SeparatedNonTarget3d(i, j, k) = AllNonTargetData(i+(k-1)*Duration_points, j);
+           end
         end
     end
 end
@@ -59,8 +67,8 @@ end
 
 for j = 1:ChNum
     for i = 1:Duration_points
-        EachElectrodeAveragedTarget2d(i, j) = mean(SeparatedTarget3d(i, j, 1:SeparatedTargetNum));
-        EachElectrodeAveragedNonTarget2d(i, j) = mean(SeparatedNonTarget3d(i, j, 1:SeparatedNonTargetNum));
+        EachElectrodeAveragedTarget2d(i, j) = nanmean(SeparatedTarget3d(i, j, 1:SeparatedTargetNum));
+        EachElectrodeAveragedNonTarget2d(i, j) = nanmean(SeparatedNonTarget3d(i, j, 1:SeparatedNonTargetNum));
     end
 end
 
@@ -70,8 +78,8 @@ end
 %=== SD for 2D ===
 for j = 1:ChNum
     for i = 1:Duration_points
-        SDEachElectrodeTarget2d(i, j) = std(SeparatedTarget3d(i, j, 1:SeparatedTargetNum), 1, 3);
-        SDEachElectrodeNonTarget2d(i, j) = std(SeparatedNonTarget3d(i, j, 1:SeparatedNonTargetNum), 1, 3);
+        SDEachElectrodeTarget2d(i, j) = nanstd(SeparatedTarget3d(i, j, 1:SeparatedTargetNum), 1, 3);
+        SDEachElectrodeNonTarget2d(i, j) = nanstd(SeparatedNonTarget3d(i, j, 1:SeparatedNonTargetNum), 1, 3);
     end
 end
 
@@ -98,8 +106,8 @@ end
 %Contains all channels averaged data (mean TimeAverage Comulmn1-8 -> Column1) 
 
 for i = 1:Duration_points
-    MeanAllElectrodeTarget1d(i, 1) = mean(EachElectrodeAveragedTarget2d(i, :));
-    MeanAllElectrodeNonTarget1d(i, 1) = mean(EachElectrodeAveragedNonTarget2d(i, :));
+    MeanAllElectrodeTarget1d(i, 1) = nanmean(EachElectrodeAveragedTarget2d(i, :));
+    MeanAllElectrodeNonTarget1d(i, 1) = nanmean(EachElectrodeAveragedNonTarget2d(i, :));
 end
 
 %whos MeanAllElectrodeTarget1d
@@ -134,8 +142,8 @@ end
 
 %Calculate each Timepoint SD
 for i = 1:Duration_points
-    SDAllTarget1d(i, 1) = std(rowTarget(i, :), 1);
-    SDAllNonTarget1d(i, 1) = std(rowNonTarget(i, :), 1);
+    SDAllTarget1d(i, 1) = nanstd(rowTarget(i, :), 1);
+    SDAllNonTarget1d(i, 1) = nanstd(rowNonTarget(i, :), 1);
 end
 
 %whos SDAllTarget1d

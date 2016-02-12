@@ -1,4 +1,4 @@
-function drawSignalGraph(file_TargetSignal, file_TargetSE, file_NonTargetSignal, file_NonTargetSE, channelNo, GraphTitle, Stimulus_duration, Duration_points, gap)
+function drawSignalGraph(file_TargetSignal, file_TargetSE, file_NonTargetSignal, file_NonTargetSE, channelNo, GraphTitle, Stimulus_duration, Duration_points, gap, Ymax, Ymin)
 
 X = linspace(gap, Stimulus_duration+gap, Duration_points);
 TargetColor = [0.3984 0 0.5977];
@@ -24,6 +24,7 @@ hold on
 
 legend('T', 'N');
 
+%{
 maxvec = max(file_TargetSignal(:,channelNo), file_NonTargetSignal(:,channelNo));
 minvec = min(file_TargetSignal(:,channelNo), file_NonTargetSignal(:,channelNo));
 
@@ -34,6 +35,7 @@ else
     Ymax = 10;
     Ymin = -10;
 end
+%}
 hold on
 
 axis([0.0 0.7 Ymin Ymax]);
