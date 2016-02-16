@@ -1,7 +1,7 @@
 function drawSignalGraph_clsAB_TARGETDif(file_clsASignal, file_clsASE, file_clsBSignal, file_clsBSE,...
-    Channels, GraphTitle, Stimulus_duration, Duration_points)
+    Channels, GraphTitle, Stimulus_duration, Duration_points, gap, Ymax, Ymin)
 
-X = linspace(0.0, Stimulus_duration, Duration_points);
+X = linspace(gap, Stimulus_duration+gap, Duration_points);
 Color1 = [1.0 0.55 0.0];
 Color2 = [0.0 0.75 1.0];
 Color3 = [0.0 0.55 1.0];
@@ -41,7 +41,8 @@ hold on
 [ph,msg]=jbfill([0.3 0.4],[-20 -20],[20 20],'r','r',0,0.1);
 [ph,msg]=jbfill([0.6 0.7],[-20 -20],[20 20],'r','r',0,0.1);
 
-legend('clsA-Cz', 'clsA-C3', 'clsA-C4', 'clsB-Cz', 'clsB-C3', 'clsB-C4');
+%legend('clsA-Cz', 'clsA-C3', 'clsA-C4', 'clsB-Cz', 'clsB-C3', 'clsB-C4');
+legend('TAR-Cz', 'TAR-C3', 'TAR-C4', 'NTAR-Cz', 'NTAR-C3', 'NTAR-C4');
 
 % maxvec = max(file_clsASignal(:,channelNo1), file_clsASignal(:,channelNo1));
 % minvec = min(file_clsASignal(:,channelNo1), file_clsASignal(:,channelNo1));
@@ -55,8 +56,8 @@ legend('clsA-Cz', 'clsA-C3', 'clsA-C4', 'clsB-Cz', 'clsB-C3', 'clsB-C4');
 % end
 % hold on
 
-Ymax = 10;
-Ymin = -10;
+%Ymax = 10;
+%Ymin = -10;
 
 axis([0.0 0.4 Ymin Ymax]);
 set(ax,'XTick', 0.0: 0.05: 0.4);

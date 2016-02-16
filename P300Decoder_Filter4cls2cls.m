@@ -2,6 +2,7 @@ function P300Decoder_Filter4cls2cls(directory, Stimulus_1duration, Stimulus_2dur
 % ===
 % header ... [5] or [6] (Training or Trial)
 header_str = num2str(header);
+% Caution! Now version is only for the file 6 for now (Filterling setting or so)
 
 % === Take the datas from CSV files
 
@@ -35,12 +36,12 @@ File4_NonTargetCSV  = dir(['./', directory, horzcat('/[', header_str, '] P300-SB
 [AllTargetData, Sampling_Hz_256, Electrodes_16] = fileProcessor_dir(directory, File_TargetCSV);
 [AllNonTargetData] = fileProcessor_dir(directory, File_NonTargetCSV);
 
-[AllTargetData_clsA, Sampling_Hz_256,Electrodes_8]  = fileProcessor_dir(directory, FileA_TargetCSV);
+[AllTargetData_clsA, Sampling_Hz_256, Electrodes_8]  = fileProcessor_dir(directory, FileA_TargetCSV);
 [AllNonTargetData_clsA]           = fileProcessor_dir(directory, FileA_NonTargetCSV);
 [AllTargetData_clsB]              = fileProcessor_dir(directory, FileB_TargetCSV);
 [AllNonTargetData_clsB]           = fileProcessor_dir(directory, FileB_NonTargetCSV);
 
-[AllTargetData_no1, Sampling_Hz_64] = fileProcessor_dir(directory, File1_TargetCSV);
+[AllTargetData_no1] = fileProcessor_dir(directory, File1_TargetCSV);
 [AllNonTargetData_no1]           = fileProcessor_dir(directory, File1_NonTargetCSV);
 [AllTargetData_no2]              = fileProcessor_dir(directory, File2_TargetCSV);
 [AllNonTargetData_no2]           = fileProcessor_dir(directory, File2_NonTargetCSV);
@@ -86,7 +87,7 @@ File4_NonTargetCSV  = dir(['./', directory, horzcat('/[', header_str, '] P300-SB
     getERPfromCSV(AllTargetData_Filtered_P300_DS64Hz(:, 1:8), AllNonTargetData_Filtered_P300_DS64Hz(:, 1:8), Duration_points_256Hz_Downsampled);
 
 % 2 "All clsA TARGET vs clsB TARGET Stimulus(2cls)"
-% BP Filter ... OpenViBE
+% BP Filter ... MATLAB
 % Downsampling ... NOT (256Hz, because this result will taken the shape of the ERP response)
 [EachElectrodeAveragedTarget2d_DS64Hz_2clsA, SEEachElectrodeTarget2d_DS64Hz_2clsA, EachElectrodeAveragedNonTarget2d_DS64Hz_2clsA, SEEachElectrodeNonTarget2d_DS64Hz_2clsA, ...
      MeanAllElectrodeTarget1d_DS64Hz_2clsA, SEAllTarget1d_DS64Hz_2clsA, MeanAllElectrodeNonTarget1d_DS64Hz_2clsA, SEAllNonTarget1d_DS64Hz_2clsA] = ...
@@ -119,11 +120,18 @@ drawSignalGraph(MeanAllElectrodeTarget1d_DS64Hz_8ch, SEAllTarget1d_DS64Hz_8ch, M
     SEAllNonTarget1d_DS64Hz_8ch, 1, 'SBE-AllElectrodesMeanAverage(1-8Ch, Downsampled)', Stimulus_2duration, Duration_points_256Hz_Downsampled, 0.0, 5.0, -5.0);
 
 % -- 2cls / 3Channels Graph concering primary motor cortex 
-subplot(3, 4, [5, 6, 7, 8])
+gap = 0.0;
+Ymax = 7.0; Ymin = -7.0; 
+subplot(3, 4, [5, 6])
 drawSignalGraph_clsAB_TARGETDif(EachElectrodeAveragedTarget2d_DS64Hz_2clsA, SEEachElectrodeTarget2d_DS64Hz_2clsA,...
-     EachElectrodeAveragedTarget2d_DS64Hz_2clsB, SEEachElectrodeTarget2d_DS64Hz_2clsB, [1 5 6], '2clsA/B vs Cz,C3,C4 TargetSignals(DSed)',...
-     Stimulus_1duration, floor(Sampling_Hz_256 * Stimulus_1duration));
+     EachElectrodeAveragedNonTarget2d_DS64Hz_2clsA, SEEachElectrodeNonTarget2d_DS64Hz_2clsA, [1 5 6], '2clsA of Cz,C3,C4 Target ve NonTargetSignals(DSed)',...
+     Stimulus_1duration, floor(Sampling_Hz_256 * Stimulus_1duration), gap, Ymax, Ymin);
 
+subplot(3, 4, [7, 8])
+drawSignalGraph_clsAB_TARGETDif(EachElectrodeAveragedTarget2d_DS64Hz_2clsB, SEEachElectrodeTarget2d_DS64Hz_2clsB,...
+     EachElectrodeAveragedNonTarget2d_DS64Hz_2clsB, SEEachElectrodeNonTarget2d_DS64Hz_2clsB, [1 5 6], '2clsB of Cz,C3,C4 Target ve NonTargetSignals(DSed)',...
+     Stimulus_1duration, floor(Sampling_Hz_256 * Stimulus_1duration), gap, Ymax, Ymin);
+ 
 % -- 4cls
 subplot(3, 4, 9)
 drawSignalGraph(MeanAllElectrodeTarget1d_DS64Hz_4cls1, SEAllTarget1d_DS64Hz_4cls1, MeanAllElectrodeNonTarget1d_DS64Hz_4cls1,...
