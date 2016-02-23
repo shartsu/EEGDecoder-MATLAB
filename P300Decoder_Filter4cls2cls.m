@@ -117,7 +117,7 @@ File4_NonTargetCSV  = dir(['./', directory, horzcat('/[', header_str, '] P300-SB
 figure
 subplot(3, 4, [1, 2, 3, 4])
 drawSignalGraph(MeanAllElectrodeTarget1d_DS64Hz_8ch, SEAllTarget1d_DS64Hz_8ch, MeanAllElectrodeNonTarget1d_DS64Hz_8ch,...
-    SEAllNonTarget1d_DS64Hz_8ch, 1, 'SBE-AllElectrodesMeanAverage(1-8Ch, Downsampled)', Stimulus_2duration, Duration_points_256Hz_Downsampled, 0.0, 5.0, -5.0);
+    SEAllNonTarget1d_DS64Hz_8ch, 1, 'SBE-AllElectrodesMeanAverage(1-8Ch, Downsampled)', Stimulus_2duration, Duration_points_256Hz_Downsampled, 0.0, 2.0, -2.0);
 
 % -- 2cls / 3Channels Graph concering primary motor cortex 
 gap = 0.0;
@@ -154,21 +154,21 @@ print(filename_Mean,'-dpng','-r0')
 % === EachElectrodeGraph % === 
 figure
 subplot(2, 4, 1)
-drawSignalGraph(EachElectrodeAveragedTarget2d_DS64Hz_8ch, SEEachElectrodeTarget2d_DS64Hz_8ch, EachElectrodeAveragedNonTarget2d_DS64Hz_8ch, SEEachElectrodeNonTarget2d_DS64Hz_8ch, 1, Electrodes_8(1,1), Stimulus_2duration, Duration_points_256Hz_Downsampled, 0.0, 5.0, -5.0);
+drawSignalGraph(EachElectrodeAveragedTarget2d_DS64Hz_8ch, SEEachElectrodeTarget2d_DS64Hz_8ch, EachElectrodeAveragedNonTarget2d_DS64Hz_8ch, SEEachElectrodeNonTarget2d_DS64Hz_8ch, 1, Electrodes_8(1,1), Stimulus_2duration, Duration_points_256Hz_Downsampled, 0.0, 2.0, -2.0);
 subplot(2, 4, 2)
-drawSignalGraph(EachElectrodeAveragedTarget2d_DS64Hz_8ch, SEEachElectrodeTarget2d_DS64Hz_8ch, EachElectrodeAveragedNonTarget2d_DS64Hz_8ch, SEEachElectrodeNonTarget2d_DS64Hz_8ch, 2, Electrodes_8(1,2), Stimulus_2duration, Duration_points_256Hz_Downsampled, 0.0, 5.0, -5.0);
+drawSignalGraph(EachElectrodeAveragedTarget2d_DS64Hz_8ch, SEEachElectrodeTarget2d_DS64Hz_8ch, EachElectrodeAveragedNonTarget2d_DS64Hz_8ch, SEEachElectrodeNonTarget2d_DS64Hz_8ch, 2, Electrodes_8(1,2), Stimulus_2duration, Duration_points_256Hz_Downsampled, 0.0, 2.0, -2.0);
 subplot(2, 4, 3)
-drawSignalGraph(EachElectrodeAveragedTarget2d_DS64Hz_8ch, SEEachElectrodeTarget2d_DS64Hz_8ch, EachElectrodeAveragedNonTarget2d_DS64Hz_8ch, SEEachElectrodeNonTarget2d_DS64Hz_8ch, 3, Electrodes_8(1,3), Stimulus_2duration, Duration_points_256Hz_Downsampled, 0.0, 5.0, -5.0);
+drawSignalGraph(EachElectrodeAveragedTarget2d_DS64Hz_8ch, SEEachElectrodeTarget2d_DS64Hz_8ch, EachElectrodeAveragedNonTarget2d_DS64Hz_8ch, SEEachElectrodeNonTarget2d_DS64Hz_8ch, 3, Electrodes_8(1,3), Stimulus_2duration, Duration_points_256Hz_Downsampled, 0.0, 2.0, -2.0);
 subplot(2, 4, 4)
-drawSignalGraph(EachElectrodeAveragedTarget2d_DS64Hz_8ch, SEEachElectrodeTarget2d_DS64Hz_8ch, EachElectrodeAveragedNonTarget2d_DS64Hz_8ch, SEEachElectrodeNonTarget2d_DS64Hz_8ch, 4, Electrodes_8(1,4), Stimulus_2duration, Duration_points_256Hz_Downsampled, 0.0, 5.0, -5.0);
+drawSignalGraph(EachElectrodeAveragedTarget2d_DS64Hz_8ch, SEEachElectrodeTarget2d_DS64Hz_8ch, EachElectrodeAveragedNonTarget2d_DS64Hz_8ch, SEEachElectrodeNonTarget2d_DS64Hz_8ch, 4, Electrodes_8(1,4), Stimulus_2duration, Duration_points_256Hz_Downsampled, 0.0, 2.0, -2.0);
 subplot(2, 4, 5)
-drawSignalGraph(EachElectrodeAveragedTarget2d_DS64Hz_8ch, SEEachElectrodeTarget2d_DS64Hz_8ch, EachElectrodeAveragedNonTarget2d_DS64Hz_8ch, SEEachElectrodeNonTarget2d_DS64Hz_8ch, 5, Electrodes_8(1,5), Stimulus_2duration, Duration_points_256Hz_Downsampled, 0.0, 5.0, -5.0);
+drawSignalGraph(EachElectrodeAveragedTarget2d_DS64Hz_8ch, SEEachElectrodeTarget2d_DS64Hz_8ch, EachElectrodeAveragedNonTarget2d_DS64Hz_8ch, SEEachElectrodeNonTarget2d_DS64Hz_8ch, 5, Electrodes_8(1,5), Stimulus_2duration, Duration_points_256Hz_Downsampled, 0.0, 2.0, -2.0);
 subplot(2, 4, 6)
-drawSignalGraph(EachElectrodeAveragedTarget2d_DS64Hz_8ch, SEEachElectrodeTarget2d_DS64Hz_8ch, EachElectrodeAveragedNonTarget2d_DS64Hz_8ch, SEEachElectrodeNonTarget2d_DS64Hz_8ch, 6, Electrodes_8(1,6), Stimulus_2duration, Duration_points_256Hz_Downsampled, 0.0, 5.0, -5.0);
+drawSignalGraph(EachElectrodeAveragedTarget2d_DS64Hz_8ch, SEEachElectrodeTarget2d_DS64Hz_8ch, EachElectrodeAveragedNonTarget2d_DS64Hz_8ch, SEEachElectrodeNonTarget2d_DS64Hz_8ch, 6, Electrodes_8(1,6), Stimulus_2duration, Duration_points_256Hz_Downsampled, 0.0, 2.0, -2.0);
 subplot(2, 4, 7)
-drawSignalGraph(EachElectrodeAveragedTarget2d_DS64Hz_8ch, SEEachElectrodeTarget2d_DS64Hz_8ch, EachElectrodeAveragedNonTarget2d_DS64Hz_8ch, SEEachElectrodeNonTarget2d_DS64Hz_8ch, 7, Electrodes_8(1,7), Stimulus_2duration, Duration_points_256Hz_Downsampled, 0.0, 5.0, -5.0);
+drawSignalGraph(EachElectrodeAveragedTarget2d_DS64Hz_8ch, SEEachElectrodeTarget2d_DS64Hz_8ch, EachElectrodeAveragedNonTarget2d_DS64Hz_8ch, SEEachElectrodeNonTarget2d_DS64Hz_8ch, 7, Electrodes_8(1,7), Stimulus_2duration, Duration_points_256Hz_Downsampled, 0.0, 2.0, -2.0);
 subplot(2, 4, 8)
-drawSignalGraph(EachElectrodeAveragedTarget2d_DS64Hz_8ch, SEEachElectrodeTarget2d_DS64Hz_8ch, EachElectrodeAveragedNonTarget2d_DS64Hz_8ch, SEEachElectrodeNonTarget2d_DS64Hz_8ch, 8, Electrodes_8(1,8), Stimulus_2duration, Duration_points_256Hz_Downsampled, 0.0, 5.0, -5.0);
+drawSignalGraph(EachElectrodeAveragedTarget2d_DS64Hz_8ch, SEEachElectrodeTarget2d_DS64Hz_8ch, EachElectrodeAveragedNonTarget2d_DS64Hz_8ch, SEEachElectrodeNonTarget2d_DS64Hz_8ch, 8, Electrodes_8(1,8), Stimulus_2duration, Duration_points_256Hz_Downsampled, 0.0, 2.0, -2.0);
 
 filename_8ch = strcat(directory, '/_[5]P3Training2-8Chs.png');
 set(gcf,'Position', [0 0 1920 1080], 'PaperPositionMode', 'auto')

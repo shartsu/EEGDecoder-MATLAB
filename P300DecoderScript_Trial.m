@@ -1,6 +1,0 @@
-P300Decoder('../../OpenViBE(Graz)/hybrid-TK/ExperimentDatas/_LABExperiment/#82_Eva_Hybrid_100+200Hz_Training', 0.4, 0.7, 5)
-P300Decoder('../../OpenViBE(Graz)/hybrid-TK/ExperimentDatas/_LABExperiment/#90_Omar_Hybrid_100+200Hz_Training', 0.4, 0.7, 5)
-P300Decoder('../../OpenViBE(Graz)/hybrid-TK/ExperimentDatas/_LABExperiment/#98_Ray_Hybrid_100+200Hz_Training', 0.4, 0.7, 5)
-P300Decoder('../../OpenViBE(Graz)/hybrid-TK/ExperimentDatas/_LABExperiment/#106_Martin_Hybrid_100+200Hz_Training', 0.4, 0.7, 5)
-P300Decoder('../../OpenViBE(Graz)/hybrid-TK/ExperimentDatas/_LABExperiment/#114_Andreaz_Hybrid_100+200Hz_Training', 0.4, 0.7, 5)
-P300Decoder('../../OpenViBE(Graz)/hybrid-TK/ExperimentDatas/_LABExperiment/#122_Claudia_Hybrid_100+200Hz_Training', 0.4, 0.7, 5)
