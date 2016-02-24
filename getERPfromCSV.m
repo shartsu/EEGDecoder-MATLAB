@@ -8,9 +8,9 @@ SeparatedNonTargetNum = dot(size(AllNonTargetData(:,1))/Duration_points,[1 0]);
 ChNum = dot(size(AllTargetData(1,:)), [0 1]);
 
 %Just put as a log
-ChNum
-SeparatedTargetNum
-SeparatedNonTargetNum
+%ChNum
+%SeparatedTargetNum
+%SeparatedNonTargetNum
 
 %initiallize
 SeparatedTarget3d = zeros(Duration_points, ChNum, SeparatedTargetNum);

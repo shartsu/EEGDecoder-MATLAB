@@ -1,16 +1,4 @@
-function [AllTargetData_Filtered_P300, AllNonTargetData_Filtered_P300] = ...
-    BPFilter(AllTargetData, AllNonTargetData, Electrodes)
-
-% === Check strange signals are included or not % === 
-%{
-figure
-title('Check strange signals are included or not ')
-for i = 2:length(Electrodes)+1
-    subplot(length(Electrodes),1,i-1); 
-    plot([1:length(AllTargetData)], AllTargetData(:,i));
-    title(char(Electrodes(i-1)));
-end
-%}
+function [AllTargetData_Filtered_P300, AllNonTargetData_Filtered_P300] = BPFilter(AllTargetData, AllNonTargetData, Electrodes)
 
 % === Exploit only signals % === 
 for i = 2:length(Electrodes)+1

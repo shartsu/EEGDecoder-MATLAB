@@ -1,3 +1,5 @@
 *.ov
 *.csv
 signals
+_old
+_script
